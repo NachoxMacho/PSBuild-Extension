@@ -23,8 +23,8 @@ jobs:
     - name: Install Node.js
       uses: actions/setup-node@v1
       with:
-        node-version: 14.x
-        check-latest: true
+        node-version: '>=14'
+        check-latest: node-version
     - run: npm install
     - run: xvfb-run -a npm test
       if: runner.os == 'Linux'
