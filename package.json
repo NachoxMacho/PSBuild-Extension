@@ -2,7 +2,7 @@
 	"name": "psbuild",
 	"displayName": "PSBuild",
 	"description": "Extra Powershell Support",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"publisher": "RobOwens",
 	"author": {
 		"name": "Rob Owens",
