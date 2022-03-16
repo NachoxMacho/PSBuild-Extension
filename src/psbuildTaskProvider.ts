@@ -51,14 +51,9 @@ interface PSBuildTaskDefinition extends vscode.TaskDefinition {
      * The task name
      */
     task: string;
-
-    /**
-     * The PSBuild file containing the task
-     */
-    file?: string;
 }
 
-const buildNames: string[] = ['build', 'clean'];
+const buildNames: string[] = ['clean', 'build', 'ci', 'package'];
 function isBuildTask(name: string): boolean {
     for (const buildName of buildNames) {
         if (name.indexOf(buildName) !== -1) {
@@ -94,6 +89,7 @@ async function getPSBuildTasks(): Promise<vscode.Task[]> {
             continue;
         }
 
+        // Combine build and test tasks to just output possible tasks
         let possibleTasks = [];
         possibleTasks.push(...buildNames);
         possibleTasks.push(...testNames);
