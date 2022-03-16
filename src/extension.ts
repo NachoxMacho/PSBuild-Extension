@@ -25,12 +25,14 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(disposable);
 
 	// Setup Task Provider
+
+	// Don't setup tasks if we aren't in a folder or workspace
 	const workspaceRoot = (vscode.workspace.workspaceFolders && (vscode.workspace.workspaceFolders.length > 0))
 		? vscode.workspace.workspaceFolders[0].uri.fsPath : undefined;
 	if (!workspaceRoot) {
 		return;
 	}
-
+	// Register the tasks
 	psbuildTaskProvider = vscode.tasks.registerTaskProvider(PSBuildTaskProvider.PSBuildType, new PSBuildTaskProvider(workspaceRoot));
 }
 
