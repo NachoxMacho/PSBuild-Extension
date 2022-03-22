@@ -1,0 +1,1 @@
+Register-EditorCommand -Name 'Build' -DisplayName 'Build' -ScriptBlock { Invoke-RSMBuild -Task Build -Import }
