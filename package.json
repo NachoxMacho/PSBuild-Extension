@@ -18,15 +18,20 @@
 		"Testing"
 	],
 	"activationEvents": [
-		"onCommand:psbuild.helloWorld",
+		"onCommand:psbuild.build",
+		"onCommand:psbuild.import",
 		"workspaceContains:**/psconfig.psd1"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "psbuild.helloWorld",
-				"title": "Hello World"
+				"command": "psbuild.build",
+				"title": "Build Module"
+			},
+			{
+				"command": "psbuild.import",
+				"title": "Import Module"
 			}
 		],
 		"configurationDefaults": {

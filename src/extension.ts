@@ -11,32 +11,33 @@ let psbuildTaskProvider: vscode.Disposable | undefined;
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	// console.log('Congratulations, your extension "psbuild" is now active!');
-	// const powershellExtension = vscode.extensions.getExtension<IPowerShellExtensionClient>("ms-vscode.PowerShell");
-	// const powerShellExtensionClient = powershellExtension!.exports as IPowerShellExtensionClient;
-
-	// let psExtUUID = powershellExtension.registerExternalExtension(
-	// 	'RobOwens.psbuild',
-	// 	'v1'
-	// );
-	// powershellExtension.waitUntilStarted(psExtUUID);
-
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('psbuild.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-
-		// Run the build task registered
-		vscode.commands.executeCommand("PowerShell.InvokeRegisteredEditorCommand", { commandName: 'Build' })
-		console.log(vscode.extensions.getExtension('ms-vscode.powershell'));
-		// console.log(psExtUUID);
-		// console.log(powershellExtension.getPowerShellVersionDetails(psExtUUID));
+	// Build Command
+	let buildCommand = vscode.commands.registerCommand('psbuild.build', () => {
+		const folders = vscode.workspace.workspaceFolders;
+		if (folders !== undefined) {
+			var path = folders[0].uri.fsPath;
+			vscode.commands.executeCommand(
+				"PowerShell.RunCode",
+				false,
+				"Invoke-RSMBuild", ["-Task build", `-Path ${path}`]
+			);
+		}
 	});
-	context.subscriptions.push(disposable);
+	context.subscriptions.push(buildCommand);
+
+	let importCommand = vscode.commands.registerCommand('psbuild.import', () => {
+		const folders = vscode.workspace.workspaceFolders;
+		if (folders !== undefined) {
+			var path = folders[0].uri.fsPath;
+			vscode.commands.executeCommand(
+				"PowerShell.RunCode",
+				false,
+				"Invoke-RSMBuild", ["-Task build", "-Import", `-Path ${path}`]
+			);
+		}
+	});
+	context.subscriptions.push(importCommand);
+
 
 	// Setup Task Provider
 
